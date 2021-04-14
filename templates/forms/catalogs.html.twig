@@ -1,0 +1,85 @@
+<form method="post" enctype="multipart/form-data" name="catalogs" class="d-none" novalidate>
+    <input type="hidden" name="catalogs[id]">
+
+    <div class="card border-0">
+
+        <div class="imagebox card-img-top">
+            <input type="hidden" name="catalogs[image][id]">
+            <input type="file" name="catalogs[image][data]" accept="image/jpeg,image/png"/>
+            <button type="button" class="btn btn-dark imagebox-control">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </button>
+            <img alt="..." class="img-fluid w-100 rounded-top" style="min-height: 400px" src="https://dummyimage.com/600x400/9ca1ae">
+        </div>
+
+        <div class="card-body">
+
+            <div class="form-group row">
+                <label for="catalogs[event]" class="col-form-label col-4">Название</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="catalogs[event]" name="catalogs[event]">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="catalogs[brand]" class="col-form-label col-4">Бренд</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="catalogs[brand]" name="catalogs[brand]">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="catalogs[company]" class="col-form-label col-4">Компания</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="catalogs[company]" name="catalogs[company]">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">Период</div>
+                <div class="col-8">
+                    <div class="input-group">
+                        <select class="custom-select w-50" id="catalogs[period_month]" name="catalogs[period_month]" aria-label="Месяц">
+                            {% for value, text in datetime.months %}
+                                <option value="{{ value }}">{{ text }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="custom-select" id="catalogs[period_year]" name="catalogs[period_year]" aria-label="Год">
+                            {% for year in datetime.years %}
+                                <option value="">{{ year|date('Y') }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="catalogs[makeupArtist]" class="col-form-label col-4">Визажист</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="catalogs[makeupArtist]" name="catalogs[makeupArtist]">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="catalogs[stylist]" class="col-form-label col-4">Стилист</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="catalogs[stylist]" name="catalogs[stylist]">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="catalogs[photographer]" class="col-form-label col-4">Фотограф</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="catalogs[photographer]" name="catalogs[photographer]">
+                </div>
+            </div>
+            <div class="form-group row mb-0">
+                <label for="catalogs[designer]" class="col-form-label col-4">Дизайнер одежды</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="catalogs[designer]" name="catalogs[designer]"/>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</form>

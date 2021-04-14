@@ -1,0 +1,40 @@
+{
+  "name": "modelsua/web",
+  "description": "Ukrainian Models Association Website",
+  "type": "project",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Артем Морозов",
+      "email": "artem.morozov@icloud.com"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": "^5.6",
+    "ext-pdo": "*",
+    "ext-json": "*",
+    "ext-mbstring": "*",
+    "ext-intl": "*",
+    "ext-imagick": "*",
+    "ext-memcache": "*",
+    "phpcollection/phpcollection": "^0.5.0",
+    "symfony/http-foundation": "^3.4",
+    "symfony/form": "^3.4",
+    "twig/twig": "^1.42",
+    "doctrine/collections": "^1.4",
+    "doctrine/orm": "^2.5",
+    "doctrine/annotations": "^1.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/"
+    },
+    "classmap": [
+      "lib/",
+      "framework/",
+      "apps/frontend/modules/"
+    ]
+  }
+}

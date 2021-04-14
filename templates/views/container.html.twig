@@ -1,0 +1,142 @@
+<div class="d-flex flex-column px-0 mt-4">
+    <div class="d-flex flex-row">
+        <a class="square flex-grow-1" data-toggle="button" href="javascript:void 0">Работы</a>
+        <div class="btn-group">
+            <a class="btn dropdown-toggle p-0"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                    style="font-size: 12px">Добавить</a>
+            <div class="dropdown-menu dropdown-menu-right shadow rounded-0"
+                    aria-labelledby="dropdownMenuLink"
+                    style="font-size: 12px">
+                {% for key, value in workTypes %}
+                    <a data-form-name="{{ key }}" href="javascript:void 0;" class="dropdown-item">{{ value }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div>
+        <div>
+            <ul class="list-group list-group-flush fs12">
+                <li class="list-group-item px-0 py-1 d-flex flex-row justify-content-between">
+                    <span>Конкурс :: <a href="/albums/album?aid=1564&amp;uid=4">tralala, Украина, 123</a></span>
+                    <span>Февраль, 2011</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="workFormModal" data-backdrop="false" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 42em">
+        <div class="modal-content shadow rounded">
+            <div class="modal-header p-1 d-none">
+                <h6 class="modal-title text-uppercase">Обложка</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body p-0">
+                {% from 'forms/default.html.twig' import default as defaultForm %}
+
+                {{ defaultForm('adv') }}
+                {{ defaultForm('portfolio') }}
+                {% include 'forms/covers.html.twig' %}
+                {% include 'forms/fashion.html.twig' %}
+                {% include 'forms/defile.html.twig' %}
+                {% include 'forms/advertisement.html.twig' %}
+                {% include 'forms/contest.html.twig' %}
+                {% include 'forms/catalogs.html.twig' %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark">Сохранить</button>
+                <button type="button" class="btn btn-light" data-dismiss="modal">Отменить</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const modal = document.querySelector('div[id="workFormModal"].modal');
+        const tabView = new TabView();
+
+        modal
+            .querySelectorAll('form[name]')
+            .forEach(form => {
+                tabView.add(form.name, form);
+            });
+
+        document
+            .querySelectorAll('a[data-form-name]')
+            .forEach(a => {
+                a.addEventListener('click', ({target: {dataset: {formName}}}) => {
+                    tabView.show(formName);
+                    $(modal).modal('show');
+                });
+            });
+
+        modal
+            .querySelectorAll('div.imagebox')
+            .forEach(ImageView);
+
+        function Form(formElement) {
+            return {
+                reset() {
+                    formElement.dispatchEvent(new Event('reset'));
+                }
+            }
+        }
+
+        function TabView() {
+            const content = new Map();
+
+            return {
+                add(name, view) {
+                    content.set(name, view);
+
+                    return this;
+                },
+                show(name) {
+                    if (content.has(name)) {
+                        content.forEach(({classList}) => {
+                            classList.add('d-none');
+                        });
+
+                        content.get(name).classList.remove('d-none');
+                    }
+
+                    return this;
+                }
+            }
+        }
+
+        function ImageView(container) {
+            const fileReader = new FileReader();
+            const inputElement = container.querySelector(':scope > input[type="file"]');
+            const buttonElement = container.querySelector(':scope > button.imagebox-control');
+            const imageElement = container.querySelector(':scope > img')
+
+            inputElement.addEventListener('change', ({target: {files}}) => {
+                [...files].forEach(fileReader.readAsDataURL.bind(fileReader));
+            }, false);
+
+            buttonElement.addEventListener('click', e => {
+                inputElement.dispatchEvent(new MouseEvent('click', {bubbles: true}));
+                e.preventDefault();
+                e.stopPropagation();
+            }, false);
+
+            fileReader.onload = (e) => {
+                imageElement.src = e.target.result;
+            }
+
+            container.closest('form').addEventListener('reset', e => {
+                imageElement.removeAttribute('src');
+            }, false);
+        }
+
+    });
+</script>

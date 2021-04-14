@@ -1,0 +1,17 @@
+{
+  "name": "modelsua",
+  "description": "",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Artem Morozov <till20052@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@iconfu/svg-inject": "^1.2.3",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.2",
+    "uuid": "^8.1.0"
+  },
+  "devDependencies": {}
+}

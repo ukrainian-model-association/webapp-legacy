@@ -1,0 +1,77 @@
+<form method="post" enctype="multipart/form-data" name="fashion" class="d-none" novalidate>
+    <input type="hidden" name="fashion[id]">
+
+    <div class="card border-0">
+        <div class="imagebox card-img-top">
+            <input type="hidden" name="fashion[image][id]">
+            <input type="file" name="fashion[image][data]" accept="image/jpeg,image/png"/>
+            <button type="button" class="btn btn-dark imagebox-control">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </button>
+            <img alt="..." class="img-fluid w-100 rounded-top" style="min-height: 400px" src="https://dummyimage.com/600x400/9ca1ae">
+        </div>
+        <div class="card-body">
+            <div class="form-group row">
+                <label for="fashion[journal_name]" class="col-form-label col-4">Журнал</label>
+                <div class="col-8">
+                    <input type="text" id="fashion[journal_name]" name="covers[journal_name]" class="form-control"
+                           placeholder="Название журнала" aria-label="Название журнала"/>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-8 offset-4">
+                    <div class="input-group">
+                        <input type="text" name="fashion[journal_number]" placeholder="Номер" aria-label="Номер" class="form-control"/>
+                        <select class="custom-select" id="fashion[journal_month]" name="fashion[journal_month]" aria-label="Месяц">
+                            {% for value, text in datetime.months %}
+                                <option value="{{ value }}">{{ text }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="custom-select" id="fashion[journal_year]" name="fashion[journal_year]" aria-label="Год">
+                            {% for year in datetime.years %}
+                                <option value="">{{ year|date('Y') }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">Напечатан</div>
+                <div class="col-8">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="fashion[printedIn][]" id="fashion[printedIn_ukraine]" value="ukraine" checked/>
+                        <label class="form-check-label" for="fashion[printedIn_ukraine]">в Украине</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="fashion[printedIn][]" id="fashion[printedIn_otherCountry]" value="otherCountry"/>
+                        <label class="form-check-label" for="fashion[printedIn_otherCountry]">в другой стране</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="fashion[printedIn][]" id="fashion[printedIn_moreThanOneCountries]" value="moreThanOneCountries"/>
+                        <label class="form-check-label" for="fashion[printedIn_moreThanOneCountries]">в нескольких странах</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="fashion[makeupArtist]" class="col-form-label col-4">Визажист</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="fashion[makeupArtist]" name="fashion[makeupArtist]">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="fashion[stylist]" class="col-form-label col-4">Стилист</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="fashion[stylist]" name="fashion[stylist]">
+                </div>
+            </div>
+            <div class="form-group row mb-0">
+                <label for="fashion[photographer]" class="col-form-label col-4">Фотограф</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="fashion[photographer]" name="fashion[photographer]">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,88 @@
+<form method="post" enctype="multipart/form-data" name="advertisement" class="d-none" novalidate>
+    <input type="hidden" name="advertisement[id]">
+
+    <div class="card border-0">
+        <div class="imagebox card-img-top">
+            <input type="hidden" name="advertisement[image][id]">
+            <input type="file" name="advertisement[image][data]" accept="image/jpeg,image/png"/>
+            <button type="button" class="btn btn-dark imagebox-control">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </button>
+            <img alt="..." class="img-fluid w-100 rounded-top" style="min-height: 400px" src="https://dummyimage.com/600x400/9ca1ae">
+        </div>
+        <div class="card-body">
+
+            <div class="form-group row">
+                <div class="col-4">Тип</div>
+                <div class="col-8">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="advertisement[type][]" id="advertisement[type_journal]" value="journal" checked/>
+                        <label class="form-check-label" for="advertisement[type_journal]">в журнале</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="advertisement[type][]" id="advertisement[type_foreign]" value="foreign"/>
+                        <label class="form-check-label" for="advertisement[type_foreign]">наружная</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="advertisement[brand]" class="col-form-label col-4">Бренд</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="advertisement[brand]" name="advertisement[brand]">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="advertisement[company]" class="col-form-label col-4">Компания</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="advertisement[company]" name="advertisement[company]">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">Период</div>
+                <div class="col-8">
+                    <div class="input-group">
+                        <select class="custom-select w-50" id="advertisement[period_month]" name="advertisement[period_month]" aria-label="Месяц">
+                            {% for value, text in datetime.months %}
+                                <option value="{{ value }}">{{ text }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="custom-select" id="advertisement[period_year]" name="advertisement[period_year]" aria-label="Год">
+                            {% for year in datetime.years %}
+                                <option value="">{{ year|date('Y') }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="advertisement[makeupArtist]" class="col-form-label col-4">Визажист</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="advertisement[makeupArtist]" name="advertisement[makeupArtist]">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="advertisement[stylist]" class="col-form-label col-4">Стилист</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="advertisement[stylist]" name="advertisement[stylist]">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="advertisement[photographer]" class="col-form-label col-4">Фотограф</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="advertisement[photographer]" name="advertisement[photographer]">
+                </div>
+            </div>
+            <div class="form-group row mb-0">
+                <label for="advertisement[designer]" class="col-form-label col-4">Дизайнер одежды</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="advertisement[designer]" name="advertisement[designer]"/>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>

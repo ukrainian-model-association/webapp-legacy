@@ -1,0 +1,142 @@
+{% from 'forms/forms.html.twig' import default as defaultForm %}
+
+<script src="/public/js/app/profile/index/works.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', ({ target }) => {
+    const scope = target.querySelector('section[id="works"]');
+    const provideData = (albums) => {
+      albums.forEach(({ id, name, type }) => works.list.add({ id, name, type: works.types.get(type) }));
+    };
+
+    window.works = new Works(scope, {
+      personId: {{ profile.user_id }},
+      albumTypes: '{{ workTypes|json_encode|raw }}',
+    });
+
+    api['persons/albums']({{ profile.user_id }})
+      .all()
+      .then(provideData);
+  });
+</script>
+
+<section id="works">
+    <div class="d-flex flex-column px-0 mt-2">
+        <div class="d-flex flex-row">
+            <a class="square flex-grow-1" data-toggle="button" href="javascript:void 0">Работы</a>
+            <div class="btn-group">
+                <a class="btn btn-sm btn-light dropdown-toggle border-0" role="button" data-toggle="dropdown"
+                   aria-haspopup="true"
+                   aria-expanded="false"><i class="fas fa-plus-circle"></i></a>
+                <div class="dropdown-menu dropdown-menu-right shadow rounded-0"
+                     aria-labelledby="dropdownMenuLink">
+                    {% for key, value in workTypes %}
+                        <a data-form-name="{{ key }}" href="javascript:void 0;"
+                           class="dropdown-item btn btn-sm btn-light">{{ value }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <div id="alertOfEmptyList"
+                 class="alert alert-dark m-0 border-0 rounded-0 fs12 text-center text-muted{% if workList is not empty %} d-none{% endif %}"
+                 role="alert">Тут еще нет работ
+            </div>
+            <ul id="workAlbums" class="list-group list-group-flush fs12">
+                <template id="listItem">
+                    <li data-album-id="${album.id}" data-person-id="{{ profile.user_id }}"
+                        class="list-group-item px-0 py-1 d-flex flex-row justify-content-between align-items-center">
+                        <div>${album.type} :: <a href="javascript:void(0);"
+                                                 onclick="works.list.show(this.closest('li'))"
+                                                 class="btn btn-link text-dark p-0">${album.name}</a></div>
+                        <div>
+                            <div class="btn-group dropright">
+                                <button class="btn btn-sm btn-light dropdown-toggle border-0 shadow-none" type="button"
+                                        data-toggle="dropdown"
+                                        aria-haspopup="true"
+                                        aria-expanded="false"><i class="fas fa-ellipsis-h"></i></button>
+                                <div class="dropdown-menu shadow">
+                                    <a class="dropdown-item btn btn-sm btn-light" href="javascript: void 0;"
+                                       onclick="works.list.read(this.closest('li'))">
+                                        <i class="far fa-edit mr-2"></i> Изменить
+                                    </a>
+                                    <a class="dropdown-item btn btn-sm btn-light" href="javascript: void 0;"
+                                       onclick="works.list.remove(this.closest('li'))">
+                                        <i class="far fa-trash-alt mr-2"></i> Удалить
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </template>
+            </ul>
+        </div>
+    </div>
+
+    <div class="modal fade" id="workFormModal" data-backdrop="false" data-keyboard="false" tabindex="-1" role="dialog"
+         aria-hidden="false">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 42em">
+            <div class="modal-content shadow rounded">
+                <div class="modal-header p-1 d-none">
+                    <h6 class="modal-title text-uppercase">Обложка</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-0">
+                    {% include 'forms/covers.html.twig' %}
+                    {# {% include 'forms/fashion.html.twig' %} #}
+                    {% include 'forms/defile.html.twig' %}
+                    {{ defaultForm('adv') }}
+                    {# {% include 'forms/advertisement.html.twig' %} #}
+                    {% include 'forms/contest.html.twig' %}
+                    {# {% include 'forms/catalogs.html.twig' %} #}
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-dark">Сохранить</button>
+                    <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Отменить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="work_preview" data-backdrop="false" data-keyboard="false" tabindex="-1"
+         role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 42em">
+            <div class="modal-content shadow rounded">
+                <div class="modal-header">
+                    <h6 class="modal-title text-uppercase">Preview</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <img src="https://dummyimage.com/600x400/9ca1ae" class="img-fluid w-100" alt="...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<script>
+    {# document.addEventListener('DOMContentLoaded', () => { #}
+    {# const section = document.querySelector('section[onload]'); #}
+    {# section.dispatchEvent(new Event('load')); #}
+
+    {# api['persons/albums']({{ profile.user_id }}) #}
+    {# .all() #}
+    {# .then(albums => console.log(albums)); #}
+
+    // const slot = document.querySelector('div[slot="works"]')
+    // const works = new Works({})
+
+    {# window.worksWidget = WorksWidget({ #}
+    {# listGroup: document.querySelector('ul[id="workAlbums"].list-group'), #}
+    {# modal: document.querySelector('div[id="workFormModal"].modal'), #}
+    {# $$: { #}
+    {# profileId: {{ profile.user_id|default(0) }}, #}
+    {# } #}
+    {# }) #}
+    // });
+</script>

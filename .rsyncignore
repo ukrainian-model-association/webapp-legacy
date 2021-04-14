@@ -1,0 +1,4 @@
+data/debug/*
+data/files/*
+data/storage/*
+data/temp/*

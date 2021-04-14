@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+server_run() {
+    local url='modelsua@bravo'
+    local path='/home/modelsua/docker/apps/web'
+    local -a commands=()
+
+    ssh ${url} bash -x <<EOL
+cd ${path}
+for c in ${commands[*]}; do
+    echo \$c
+done
+EOL
+}
+
+swap_for() {
+    ssh bravo
+}

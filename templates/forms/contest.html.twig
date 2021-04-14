@@ -1,0 +1,114 @@
+<form method="post" enctype="multipart/form-data" name="contest" class="d-none" novalidate>
+    <input type="hidden" name="contest[id]">
+
+    <div class="card border-0">
+        <div class="imagebox card-img-top">
+            <input type="hidden" name="contest[image][id]">
+            <input type="file" name="contest[image][data]" accept="image/jpeg,image/png"/>
+            <button type="button" class="btn btn-dark imagebox-control">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </button>
+            <img alt="..." class="img-fluid w-100 rounded-top" style="min-height: 300px;"
+                 src="https://placehold.jp/500x300.png">
+        </div>
+        <div class="card-body">
+
+            <div class="form-group row">
+                <label for="contest[event]" class="col-form-label col-4">Мероприятие</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="contest[event]" name="contest[event]"
+                           required="required">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="contest[country]" class="col-form-label col-4">Страна</label>
+                <div class="col-8">
+                    <select class="custom-select" id="contest[country]" name="contest[country]" required="required">
+                        <option selected> &mdash;</option>
+                        {% for country in geo.countries %}
+                            <option value="{{ country.id }}">{{ country.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row d-none">
+                <label for="contest[city]" class="col-form-label col-4">Город</label>
+                <div class="col-8">
+                    <select
+                            class="custom-select"
+                            id="contest[city]"
+                            name="contest[city]"
+                            data-depends-on="select[id='contest[country]']"
+                            required="required"></select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="contest[period]" class="col-form-label col-4">Период</label>
+                <div class="col-8">
+                    <div class="input-group">
+                        <select class="custom-select w-50" id="contest[period_month]" name="contest[period_month]"
+                                aria-label="Месяц">
+                            {% for value, text in datetime.months %}
+                                <option value="{{ value }}">{{ text }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="custom-select" id="contest[period_year]" name="contest[period_year]"
+                                aria-label="Год">
+                            {% for year in datetime.years %}
+                                <option value="">{{ year|date('Y') }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row mb-0">
+                <div class="col-8 offset-4">
+                    <div class="form-check mb-1">
+                        <input class="form-check-input" type="radio" id="contest[hasAwards_no]"
+                               name="contest[hasAwards]" value="0" checked/>
+                        <label class="form-check-label" for="contest[hasAwards_no]">Участие</label>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="radio" id="contest[hasAwards_yes]"
+                               name="contest[hasAwards]" value="1"/>
+                        <label class="form-check-label" for="contest[hasAwards_yes]">Награда</label>
+                    </div>
+                    <div class="form-group mb-0"
+                         data-bind-up="(target.value !== 1 && this.classList.add('d-none')) || this.classList.remove('d-none')"
+                         data-target="input[type='radio'][name='contest[hasAwards]']">
+                        <label>
+                            <select class="custom-select" name="contest[awards_level]">
+                                <option selected> &mdash;</option>
+                                <option value="1">1 место</option>
+                                <option value="2">2 место</option>
+                                <option value="3">3 место</option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const form = document.forms.namedItem('contest');
+
+        const handleChange = ({target: {value}}) => {
+            if (value !== 1) {
+
+            }
+        }
+
+        form.querySelectorAll('input[name="contest[hasAwards]"]').forEach(e => {
+            e.addEventListener('change', handleChange);
+        });
+
+    });
+</script>

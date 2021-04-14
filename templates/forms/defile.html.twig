@@ -1,0 +1,102 @@
+<form method="post" enctype="multipart/form-data" name="defile" class="d-none" novalidate>
+    <input type="hidden" name="defile[id]">
+
+    <div class="card border-0">
+        <div class="imagebox card-img-top">
+            <input type="hidden" name="defile[image][id]">
+            <input type="file" name="defile[image][data]" accept="image/jpeg,image/png"/>
+            <button type="button" class="btn btn-dark imagebox-control">
+                <i class="fas fa-cloud-upload-alt"></i>
+            </button>
+            <img alt="..." class="img-fluid w-100 rounded-top" style="min-height: 300px;"
+                 src="https://placehold.jp/500x300.png">
+        </div>
+        <div class="card-body">
+
+            <div class="form-group row">
+                <label for="defile[event]" class="col-form-label col-4">Мероприятие</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="defile[event]" name="defile[event]">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="defile[country]" class="col-form-label col-4">Страна</label>
+                <div class="col-8">
+                    <select class="custom-select" id="defile[country]" name="defile[country]" required="required">
+                        <option selected> &mdash;</option>
+                        {% for country in geo.countries %}
+                            <option value="{{ country.id }}">{{ country.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group row d-none">
+                <label for="defile[city]" class="col-form-label col-4">Город</label>
+                <div class="col-8">
+                    <select
+                            class="custom-select"
+                            id="defile[city]"
+                            name="defile[city]"
+                            data-depends-on="select[id='defile[country]']"
+                            required="required"></select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="defile[period]" class="col-form-label col-4">Период</label>
+                <div class="col-8">
+                    <div class="input-group">
+                        <select class="custom-select w-50" id="defile[period_month]" name="defile[period_month]">
+                            {% for value, text in datetime.months %}
+                                <option value="{{ value }}">{{ text }}</option>
+                            {% endfor %}
+                        </select>
+                        <select class="custom-select" id="defile[period_year]" name="defile[period_year]">
+                            {% for year in datetime.years %}
+                                <option value="">{{ year|date('Y') }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">Показ</div>
+                <div class="col-8">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="defile[show_opening]"
+                               id="defile[show_opening]" value="1"/>
+                        <label class="form-check-label" for="defile[show_opening]">Открывала</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="defile[show_closing]"
+                               id="defile[show_closing]" value="1"/>
+                        <label class="form-check-label" for="defile[show_closing]">Закрывала</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="defile[makeupArtist]" class="col-form-label col-4">Визажист</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="defile[makeupArtist]" name="defile[makeupArtist]">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="defile[stylist]" class="col-form-label col-4">Стилист</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="defile[stylist]" name="defile[stylist]">
+                </div>
+            </div>
+
+            <div class="form-group row mb-0">
+                <label for="defile[designer]" class="col-form-label col-4">Дизайнер</label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="defile[designer]" name="defile[designer]">
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
